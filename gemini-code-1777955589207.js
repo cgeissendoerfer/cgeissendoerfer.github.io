@@ -77,7 +77,7 @@ export default function JourneyDashboard() {
     </div>
     </header>
 
-      <main className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <main className="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
   {/* Timeline Component */}
             <div className="lg:col-span-3 border-4 border-black p-6 bg-gray-50">
               <h2 className="text-2xl font-black mb-10 uppercase italic">Process Timeline</h2>
