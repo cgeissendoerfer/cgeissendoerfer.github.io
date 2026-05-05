@@ -1,24 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My JavaScript App</title>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script src="https://unpkg.com/framer-motion@11/dist/framer-motion.js"></script>
-</head>
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>My JavaScript App</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/framer-motion@11/dist/framer-motion.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  </head>
 <body>
-  <div id="root"></div>
-  <script type="text/babel" data-presets="react">
-    const { useState } = React;
-    const { motion, AnimatePresence } = window.FramerMotion;
-  </script>
-  <script type="text/babel" data-presets="react" src="gemini-code-1777955589207.js"></script>
-  <script type="text/babel" data-presets="react">
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(React.createElement(JourneyDashboard));
-  </script>
+    <div id="root"></div>
+    <script>
+          const { useState } = React;
+          const { motion, AnimatePresence } = window.FramerMotion;
+          fetch('gemini-code-1777955589207.js')
+            .then(r => r.text())
+            .then(code => {
+                      const stripped = code
+                        .replace(/^import\s+.*?from\s+['"][^'"]+['"]\s*;?\s*$/gm, '')
+                        .replace(/^export\s+default\s+/gm, '')
+                        .replace(/^export\s+/gm, '');
+                      const withRender = stripped + '\nconst root = ReactDOM.createRoot(document.getElementById("root"));\nroot.render(React.createElement(JourneyDashboard));';
+                      const transformed = Babel.transform(withRender, { presets: ['react'] }).code;
+                      eval(transformed);
+            });
+    </script>
 </body>
 </html>
